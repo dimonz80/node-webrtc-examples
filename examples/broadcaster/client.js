@@ -12,11 +12,13 @@ localVideo.autoplay = true;
 localVideo.muted = true;
 
 async function beforeAnswer(peerConnection) {
-  const localStream = await window.navigator.mediaDevices.getUserMedia({
-    audio: true,
-    video: true
-  });
-
+  const localStream = await navigator.mediaDevices.getDisplayMedia({
+    video : {
+      cursor : "always"
+    },
+    audio : false
+  })
+ 
   localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
 
   localVideo.srcObject = localStream;
